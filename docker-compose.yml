@@ -10,6 +10,7 @@ services:
       - konix-net
 
   server:
+    image: ghcr.io/govinsaga/konix-reconciliation-server:latest
     build:
       context: ./server
       dockerfile: Dockerfile
@@ -27,12 +28,13 @@ services:
       - konix-net
 
   client:
+    image: ghcr.io/govinsaga/konix-reconciliation-client:latest
     build:
       context: ./client
       dockerfile: Dockerfile
     container_name: konix-client
     ports:
-      - "8080:80"
+      - "80:80"
     depends_on:
       - server
     networks:

@@ -1,0 +1,81 @@
+name: Deploy to OCI
+
+on:
+  push:
+    branches: [ "master" ]
+
+env:
+  REGISTRY: ghcr.io
+  # Converts repository name to lowercase automatically
+  SERVER_IMAGE_NAME: ${{ github.repository }}-server
+  CLIENT_IMAGE_NAME: ${{ github.repository }}-client
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Lowercase repository owner
+        id: repo_owner
+        run: |
+          echo "owner=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_ENV
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Server image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./server
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.owner }}/konix-reconciliation-server:latest
+
+      - name: Build and push Client image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./client
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.owner }}/konix-reconciliation-client:latest
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Copy docker-compose to OCI
+        uses: appleboy/scp-action@master
+        with:
+          host: 152.70.82.61
+          username: ubuntu
+          key: ${{ secrets.OCI_SSH_KEY }}
+          source: "docker-compose.yml"
+          target: "~/konix-reconciliation"
+
+      - name: Deploy on OCI
+        uses: appleboy/ssh-action@master
+        with:
+          host: 152.70.82.61
+          username: ubuntu
+          key: ${{ secrets.OCI_SSH_KEY }}
+          script: |
+            # Navigate to the deployment directory
+            cd ~/konix-reconciliation
+            
+            # Login to GHCR so OCI can pull the private/public images
+            echo ${{ secrets.GITHUB_TOKEN }} | sudo docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            
+            # Pull the latest images and restart the stack
+            sudo docker compose pull
+            sudo docker compose up -d
