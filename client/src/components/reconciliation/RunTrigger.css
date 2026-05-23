@@ -1,0 +1,129 @@
+.run-trigger {
+  padding: 24px;
+}
+
+.run-trigger h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.run-status {
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+}
+
+.run-status.processing {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(64, 138, 113, 0.08);
+  border: 1px solid rgba(64, 138, 113, 0.15);
+  color: var(--accent-cyan);
+}
+
+.run-status.success {
+  background: rgba(16, 185, 129, 0.06);
+  border: 1px solid rgba(16, 185, 129, 0.15);
+}
+
+.run-status.idle {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+}
+
+.run-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.run-id-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.run-id {
+  font-size: 0.8rem;
+  color: var(--color-matched);
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  background: rgba(16, 185, 129, 0.08);
+  padding: 4px 10px;
+  border-radius: 6px;
+  word-break: break-all;
+}
+
+.copy-btn {
+  padding: 4px 8px !important;
+  font-size: 1rem;
+}
+
+.run-history {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 14px;
+}
+
+.history-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+}
+
+.history-item:hover {
+  background: var(--bg-glass);
+  border-color: var(--border-subtle);
+}
+
+.history-active {
+  background: var(--bg-glass);
+  border-color: var(--border-accent) !important;
+  color: var(--accent-cyan);
+}
+
+.history-idx {
+  font-weight: 700;
+  color: var(--text-muted);
+  min-width: 24px;
+}
+
+.history-id {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  flex: 1;
+}
+
+.history-time {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}

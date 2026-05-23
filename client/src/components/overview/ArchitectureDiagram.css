@@ -1,0 +1,104 @@
+.arch-diagram {
+  padding: 40px 32px;
+  overflow-x: auto;
+}
+
+.arch-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-width: 800px;
+  padding: 20px 0;
+}
+
+.arch-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.arch-node {
+  padding: 20px 24px;
+  border-radius: var(--radius-md);
+  text-align: center;
+  min-width: 140px;
+  transition: all 0.3s ease;
+}
+
+.arch-node:hover {
+  transform: scale(1.05);
+}
+
+.arch-source {
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.arch-process {
+  background: rgba(176, 228, 204, 0.08);
+  border: 1px solid rgba(176, 228, 204, 0.2);
+}
+
+.arch-db {
+  background: rgba(64, 138, 113, 0.08);
+  border: 1px solid rgba(64, 138, 113, 0.2);
+}
+
+.arch-output {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.arch-node-icon {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.arch-node-label {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+.arch-node-sub {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.arch-arrow {
+  font-size: 1.5rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.arch-categories {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.arch-cat {
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.arch-cat.matched {
+  background: var(--color-matched-bg);
+  color: var(--color-matched);
+}
+
+.arch-cat.conflicting {
+  background: var(--color-conflicting-bg);
+  color: var(--color-conflicting);
+}
+
+.arch-cat.unmatched {
+  background: var(--color-unmatched-bg);
+  color: var(--color-unmatched);
+}
