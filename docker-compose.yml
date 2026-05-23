@@ -1,0 +1,46 @@
+services:
+  mongodb:
+    image: mongo:7
+    container_name: konix-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - konix-net
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: konix-server
+    ports:
+      - "3333:3000"
+    environment:
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb:27017/konix-reconciliation
+      - TIMESTAMP_TOLERANCE_SECONDS=300
+      - QUANTITY_TOLERANCE_PCT=0.01
+    depends_on:
+      - mongodb
+    networks:
+      - konix-net
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: konix-client
+    ports:
+      - "8080:80"
+    depends_on:
+      - server
+    networks:
+      - konix-net
+
+volumes:
+  mongo_data:
+
+networks:
+  konix-net:
+    driver: bridge
